@@ -1,22 +1,24 @@
-# Etapa 1: Construção
-FROM maven:3.8.4-openjdk-21-slim AS builder
+FROM eclipse-temurin:21-jdk AS builder
+
+# Instalar Maven (necessário)
+RUN apt-get update && \
+    apt-get install -y maven
 
 # Define o diretório de trabalho
 WORKDIR /app
 
-# Copie o arquivo pom.xml e o código-fonte
+# Copie o pom.xml e o código fonte
 COPY pom.xml .
 COPY src ./src
 
-# Compile a aplicação e crie o jar
+# Construa a aplicação
 RUN mvn clean package -DskipTests
 
-# Etapa 2: Execução
-FROM eclipse-temurin:21-jdk AS builder
+# Etapa 2: Construção da imagem final
+FROM eclipse-temurin:21-jdk
 
-# Defina o diretório de trabalho na imagem final
+# Define o diretório de trabalho
 WORKDIR /app
-
 # Copie o jar da etapa de construção
 
 COPY --from=builder /app/target/desafioosa-0.0.1-SNAPSHOT.jar.original app.jar
