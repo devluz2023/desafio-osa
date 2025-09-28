@@ -18,6 +18,7 @@ FROM openjdk:21-jdk-slim
 WORKDIR /app
 
 # Copie o jar da etapa de construção
+
 COPY --from=builder /app/target/desafioosa-0.0.1-SNAPSHOT.jar app.jar
 
 # Comando para executar o jar
