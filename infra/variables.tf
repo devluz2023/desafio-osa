@@ -2,7 +2,7 @@ variable "ssh_public_key" {
   default = "~/.ssh/id_rsa.pub"
 }
 variable "resource_group_location" {
-  default     = "East US"
+ default     = "eastus"
   description = "Location of the resource group."
 }
 

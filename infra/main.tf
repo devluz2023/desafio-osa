@@ -18,7 +18,7 @@ resource "azurerm_network_interface" "desafio-osa" {
   ip_configuration {
     name                          = "desafio-osa-ipconfig"
     subnet_id                     = azurerm_subnet.desafio-osa.id
-    public_ip_address_id          = azurerm_public_ip.desafio-osa.id
+    # public_ip_address_id          = azurerm_public_ip.desafio-osa.id
     private_ip_address_allocation = "Dynamic"
   }
 }
@@ -40,7 +40,7 @@ resource "azurerm_subnet" "desafio-osa" {
 
 
 resource "azurerm_public_ip" "desafio-osa" {
-  name                = "desafio-osa-get-started-ip"
+  name                = "desafio-osa-started-ip"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   allocation_method   = "Dynamic"
@@ -111,10 +111,10 @@ resource "azurerm_linux_virtual_machine" "desafio-osa_vm" {
   network_interface_ids = [azurerm_network_interface.desafio-osa.id]
    size               = "Standard_DS1_v2"
 
-  source_image_reference {
+   source_image_reference {
     publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "16.04-LTS"
+    offer     = "0001-com-ubuntu-server-jammy"
+    sku       = "22_04-lts-gen2"
     version   = "latest"
   }
 
