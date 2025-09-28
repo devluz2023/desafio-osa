@@ -6,7 +6,7 @@
 *.tfstate
 *.tfstate.*
 .tfstate.backup
-desafio-osa.pem
+
 # Crash log files
 crash.log
 
