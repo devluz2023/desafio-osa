@@ -19,7 +19,7 @@ WORKDIR /app
 
 # Copie o jar da etapa de construção
 
-COPY --from=builder /app/target/desafioosa-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=builder /app/target/desafioosa-0.0.1-SNAPSHOT.jar.original app.jar
 
 # Comando para executar o jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
