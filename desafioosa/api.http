@@ -19,5 +19,5 @@ Accept: application/json
 
 {
   "login": "binho77",
-  "password": "$2a$10$5p0vAE2mz2Riog4GZs8AZeJ.IaEMkFteTQDkr95a7TDDuAi8.aEj6"
+  "password": "123"
 }
