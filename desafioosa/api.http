@@ -7,8 +7,8 @@ Accept: application/json
 {
 
   "fullName": "fabio",
-  "cpf": "35333517850",
-  "login": "binho2",
+  "cpf": "35333517879",
+  "login": "binho77",
     "email": "binho3@gmail.com",
   "password": "123"
 }
@@ -18,6 +18,6 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "login": "binho2",
-  "password": "123"
+  "login": "binho77",
+  "password": "$2a$10$5p0vAE2mz2Riog4GZs8AZeJ.IaEMkFteTQDkr95a7TDDuAi8.aEj6"
 }

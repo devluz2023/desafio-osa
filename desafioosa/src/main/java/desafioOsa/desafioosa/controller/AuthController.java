@@ -14,6 +14,7 @@ import desafioOsa.desafioosa.dto.JWTResponseDTO;
 import desafioOsa.desafioosa.dto.UserLoginDTO;
 import desafioOsa.desafioosa.model.User;
 import desafioOsa.desafioosa.service.TokenService;
+import jakarta.validation.Valid;
 
 @RestController
 public class AuthController {
@@ -28,13 +29,13 @@ public class AuthController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserLoginDTO loginDTO) {
+    public ResponseEntity login(@RequestBody @Valid UserLoginDTO loginDTO) {
         try {
             var usernamePassword = new UsernamePasswordAuthenticationToken(loginDTO.getLogin(), 
             loginDTO.getPassword());
             var auth = this.authenticationManager.authenticate(usernamePassword);
             var token = tokenService.generateToken((User) auth.getPrincipal());
-
+ 
           
             return ResponseEntity.ok().body(new JWTResponseDTO(token));
         } catch (AuthenticationException e) {
