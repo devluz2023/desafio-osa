@@ -1,0 +1,23 @@
+@app_HostAddress = http://localhost:8080/api/products
+
+POST http://localhost:8080/register
+Content-Type: application/json
+Accept: application/json
+
+{
+
+  "fullName": "fabio",
+  "cpf": "35333517850",
+  "login": "binho2",
+    "email": "binho3@gmail.com",
+  "password": "123"
+}
+###
+POST http://localhost:8080/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "login": "binho2",
+  "password": "123"
+}

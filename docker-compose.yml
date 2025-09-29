@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: desafio_osa
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+    # Se precisar de senha, adicione o comando para configurar a senha aqui
+
+  # app:
+  #   build: .
+  #   container_name: desafioosa_app
+  #   depends_on:
+  #     - postgres
+  #     - redis
+  #   environment:
+  #     - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/desafio_osa
+  #     - SPRING_DATASOURCE_USERNAME=postgres
+  #     - SPRING_DATASOURCE_PASSWORD=postgres
+  #     - SPRING_REDIS_HOST=redis
+  #     - SPRING_REDIS_PORT=6379
+  #     # Se tiver senha no Redis, adicione aqui
+  #     - SPRING_PROFILES_ACTIVE=dev
+  #   ports:
+  #     - "8080:8080"
+  #   volumes:
+  #     - .:/app
+  #   command: ["./mvnw", "spring-boot:run"] # Ou seu comando de execução
+
+volumes:
+  postgres_data:
