@@ -1,4 +1,6 @@
 package desafioOsa.desafioosa.controller;
+import desafioOsa.desafioosa.dto.UserRegisterDTO;
+import desafioOsa.desafioosa.dto.UserResponseDTO;
 import desafioOsa.desafioosa.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,9 +21,9 @@ public class UserController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody User user) {
+    public ResponseEntity<?> registerUser(@RequestBody UserRegisterDTO user) {
         try {
-            User registeredUser = userService.registerUser(user);
+            UserResponseDTO registeredUser = userService.registerUser(user);
             return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

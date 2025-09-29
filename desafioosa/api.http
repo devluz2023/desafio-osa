@@ -7,8 +7,8 @@ Accept: application/json
 {
 
   "fullName": "fabio",
-  "cpf": "35333517889",
-  "login": "binho777",
+  "cpf": "35333597889",
+  "login": "binho7778",
     "email": "binho3@gmail.com",
   "password": "123"
 }
@@ -18,12 +18,12 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "login": "binho777",
+  "login": "binho7778",
   "password": "123"
 }
 
 ###
-POST http://localhost:8080/transactions/payBill?userId=9&amount=25.00
+POST http://localhost:8080/transactions/payBill?userId=10&amount=25.00
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6ImJpbmhvNzc3IiwiZXhwIjoxNzU5MTUwOTQyfQ.uRVnazaCKCtrYH09d9V-zboX-ZO4YcXmSGP0qmsNkAI
