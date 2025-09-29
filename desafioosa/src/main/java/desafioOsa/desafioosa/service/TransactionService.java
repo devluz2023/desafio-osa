@@ -10,6 +10,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,13 +23,14 @@ public class TransactionService {
     @Autowired
     private UserRepository userRepository;
 
+    private static final BigDecimal INTEREST_RATE = new BigDecimal("1.02");
+
     @Cacheable(value = "balances", key = "#userId")
     public BigDecimal getBalance(Long userId) {
         System.out.println("Buscando saldo do banco de dados para o usuário " + userId);
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
-                
 
         List<Transaction> transactions = transactionRepository.findByUser(user);
 
@@ -42,7 +44,6 @@ public class TransactionService {
     @Cacheable(value = "transactionHistories", key = "#userId")
     public List<Transaction> getTransactionHistory(Long userId) {
         System.out.println("Buscando histórico de transações do banco de dados para o usuário " + userId);
-
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
@@ -58,17 +59,27 @@ public class TransactionService {
         if (amount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Deposit amount must be positive");
         }
-
         BigDecimal currentBalance = getBalance(userId);
-        BigDecimal newBalance = currentBalance.add(amount);
 
+        if (currentBalance.compareTo(BigDecimal.ZERO) < 0) {
+            BigDecimal interestCharged = currentBalance.multiply(INTEREST_RATE).setScale(2, RoundingMode.HALF_UP);
 
-        Transaction transaction = new Transaction();
-        transaction.setUser(user);
-        transaction.setType("Deposit");
-        transaction.setAmount(amount);
-        transaction.setDate(LocalDateTime.now());
-        transactionRepository.save(transaction);
+            Transaction interestTransaction = new Transaction();
+            interestTransaction.setUser(user);
+            interestTransaction.setType("Juros Saldo Negativo");
+            interestTransaction.setAmount(interestCharged.negate());
+            interestTransaction.setDate(LocalDateTime.now());
+            transactionRepository.save(interestTransaction);
+
+            currentBalance = currentBalance.subtract(interestCharged);
+        }
+
+        Transaction depositTransaction = new Transaction();
+        depositTransaction.setUser(user);
+        depositTransaction.setType("Depósito");
+        depositTransaction.setAmount(amount);
+        depositTransaction.setDate(LocalDateTime.now());
+        transactionRepository.save(depositTransaction);
 
     }
 
@@ -89,11 +100,10 @@ public class TransactionService {
 
         BigDecimal newBalance = currentBalance.subtract(amount);
 
-
         Transaction transaction = new Transaction();
         transaction.setUser(user);
         transaction.setType("Withdrawal");
-        transaction.setAmount(amount.negate());  
+        transaction.setAmount(amount.negate());
         transaction.setDate(LocalDateTime.now());
         transactionRepository.save(transaction);
 
@@ -112,16 +122,11 @@ public class TransactionService {
 
         BigDecimal currentBalance = getBalance(userId);
 
-        if (currentBalance.compareTo(amount) < 0) {
-       
-            throw new IllegalArgumentException("Insufficient balance");
-        }
-
         BigDecimal newBalance = currentBalance.subtract(amount);
         Transaction transaction = new Transaction();
         transaction.setUser(user);
         transaction.setType("Payment");
-        transaction.setAmount(amount.negate()); 
+        transaction.setAmount(amount.negate());
         transaction.setDate(LocalDateTime.now());
         transactionRepository.save(transaction);
 
