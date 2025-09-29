@@ -1,5 +1,8 @@
 package desafioOsa.desafioosa.repository;
 
-public class UserRepository {
+public interface UserRepository extends USERJP{
+
+    
+} UserRepository {
     
 }

@@ -73,7 +73,7 @@ Uma aplicação web para gerenciamento de transações bancárias, desenvolvida 
 2.  Na raiz do projeto, execute:
     ```bash
     docker build -t desafioosa .
-    docker run -d -p 8080:8080 --name desafioosa_container desafioosa
+  docker run -e SPRING_PROFILES_ACTIVE=prod -d -p 8080:8080 --name desafioosa_container desafioosa
     ```
     A aplicação estará acessível em `http://localhost:4200`.
 
