@@ -4,8 +4,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import desafioOsa.desafioosa.service.TransactionService;
-
+import desafioOsa.desafioosa.dto.SaldoResponseDTO;
+import desafioOsa.desafioosa.model.Transaction;
 import java.math.BigDecimal;
+import java.util.List;
 
 
 @RestController
@@ -49,7 +51,8 @@ public class TransactionController {
     @GetMapping("/history")
     public ResponseEntity<?> getTransactionHistory(@RequestParam Long userId) {
         try {
-            return ResponseEntity.ok(transactionService.getTransactionHistory(userId)); 
+              SaldoResponseDTO history = transactionService.getTransactionHistory(userId);
+             return ResponseEntity.ok(history); 
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
